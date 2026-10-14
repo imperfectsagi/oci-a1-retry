@@ -1,0 +1,9 @@
+{
+  "instance_name": "n8n-server",
+  "subnet_name": "n8n-pub-subnet",
+  "ubuntu_version": "24.04",
+  "boot_gb": 50,
+  "retry_seconds": 90,
+  "run_minutes": 340,
+  "ssh_public_key": "ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzODQAAABhBBvlrv8lk9uwuNz7Rgg8Sqs1Brq+bODCegz+8EZ30mzXJ2rQzQA/MC9bYoKa2gOvhHhK6V7u4BIordrU5iz6AD5c7wY9CNvHtvXCPXoH6J1BgvwXZGAu5HkLCIvJwSXe9A== deep111296@6f6706098626"
+}
