@@ -1,0 +1,34 @@
+name: OCI A1 retry
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/20 * * * *"
+concurrency:
+  group: oci-a1-retry
+  cancel-in-progress: false
+permissions:
+  actions: write
+  contents: read
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet oci
+      - name: Retry A1 launch
+        env:
+          OCI_USER: ${{ secrets.OCI_USER }}
+          OCI_TENANCY: ${{ secrets.OCI_TENANCY }}
+          OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+          OCI_PRIVATE_KEY: ${{ secrets.OCI_PRIVATE_KEY }}
+        run: python retry.py
+      - name: Stop retrying after success
+        if: ${{ hashFiles('success.flag') != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow disable "OCI A1 retry" -R "${{ github.repository }}"
